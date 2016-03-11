@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.maiquan.aladdin_shopcar.mapper.ShopCarProductMapper" >
+  <resultMap id="BaseResultMap" type="com.maiquan.aladdin_shopcar.domain.ShopCarProduct" >
+    <id column="ID" property="ID" jdbcType="VARCHAR" />
+    <result column="shopCarID" property="shopCarID" jdbcType="VARCHAR" />
+    <result column="productID" property="productID" jdbcType="INTEGER" />
+    <result column="skuID" property="skuID" jdbcType="INTEGER" />
+    <result column="quality" property="quality" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, shopCarID, productID, skuID, quality
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_shopcarproduct
+    where ID = #{ID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_shopcarproduct
+    where ID = #{ID,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByShopCarIDAndSkuID">
+  	delete from t_shopcarproduct
+  	where shopCarID=#{shopCarID,jdbcType=INTEGER} AND skuID=#{skuID,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCarProduct">
+    insert into t_shopcarproduct (ID, shopCarID, productID, skuID,
+      quality)
+    values (#{ID,jdbcType=VARCHAR}, #{shopCarID,jdbcType=VARCHAR}, #{productID,jdbcType=INTEGER}, 
+      #{skuID,jdbcType=INTEGER},#{quality,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCarProduct" >
+    insert into t_shopcarproduct
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ID != null" >
+        ID,
+      </if>
+      <if test="shopCarID != null" >
+        shopCarID,
+      </if>
+      <if test="productID != null" >
+        productID,
+      </if>
+      <if test="skuID != null" >
+      	skuID,
+      </if>
+      <if test="quality != null" >
+        quality,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ID != null" >
+        #{ID,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCarID != null" >
+        #{shopCarID,jdbcType=VARCHAR},
+      </if>
+      <if test="productID != null" >
+        #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="skuID != null" >
+      	#{skuID,jdbcType=INTEGER},
+      </if>
+      <if test="quality != null" >
+        #{quality,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCarProduct" >
+    update t_shopcarproduct
+    <set >
+      <if test="shopCarID != null" >
+        shopCarID = #{shopCarID,jdbcType=VARCHAR},
+      </if>
+      <if test="productID != null" >
+        productID = #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="skuID != null" >
+      	skuID = #{skuID,jdbcType=INTEGER}
+      </if>
+      <if test="quality != null" >
+        quality = #{quality,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCarProduct" >
+    update t_shopcarproduct
+    set shopCarID = #{shopCarID,jdbcType=VARCHAR},
+      productID = #{productID,jdbcType=INTEGER},
+      skuID = #{skuID,jdbcType=INTEGER},
+      quality = #{quality,jdbcType=INTEGER}
+    where ID = #{ID,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByCondition" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCarProduct" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_shopcarproduct
+    <where>
+      <if test="shopCarID != null" >
+        AND shopCarID = #{shopCarID,jdbcType=VARCHAR}
+      </if>
+      <if test="productID != null" >
+        AND productID = #{productID,jdbcType=INTEGER}
+      </if>
+      <if test="skuID != null" >
+      	AND skuID = #{skuID,jdbcType=INTEGER}
+      </if>
+      <if test="quality != null" >
+        AND quality = #{quality,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  
+  <select id="deleteByShopCarID" parameterType="java.lang.Integer">
+  	delete from t_shopcarproduct
+  	where shopCarID = #{shopCarID,jdbcType=INTEGER}
+  </select>
+</mapper>

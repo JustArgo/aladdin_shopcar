@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.maiquan.aladdin_shopcar.mapper.ShopCarMapper" >
+  <resultMap id="BaseResultMap" type="com.maiquan.aladdin_shopcar.domain.ShopCar" >
+    <id column="shopCarID" property="shopCarID" jdbcType="VARCHAR" />
+    <result column="userID" property="userID" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shopCarID, userID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_shopcar
+    where shopCarID = #{shopCarID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_shopcar
+    where shopCarID = #{shopCarID,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCar" >
+    insert into t_shopcar (shopCarID, userID)
+    values (#{shopCarID,jdbcType=VARCHAR}, #{userID,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCar" >
+    insert into t_shopcar
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopCarID != null" >
+        shopCarID,
+      </if>
+      <if test="userID != null" >
+        userID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopCarID != null" >
+        #{shopCarID,jdbcType=VARCHAR},
+      </if>
+      <if test="userID != null" >
+        #{userID,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCar" >
+    update t_shopcar
+    <set >
+      <if test="userID != null" >
+        userID = #{userID,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shopCarID = #{shopCarID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCar" >
+    update t_shopcar
+    set userID = #{userID,jdbcType=VARCHAR}
+    where shopCarID = #{shopCarID,jdbcType=VARCHAR}
+  </update>
+  <select id="selectShopCarByUserID" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from t_shopcar
+  	where userID = #{userID,jdbcType=VARCHAR}
+  </select>
+</mapper>
