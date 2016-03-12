@@ -1,9 +1,6 @@
 package com.maiquan.aladdin_shopcar.service.impl;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +19,8 @@ import com.maiquan.aladdin_shopcar.mapper.ShopCarMapper;
 import com.maiquan.aladdin_shopcar.mapper.ShopCarProductMapper;
 import com.maiquan.aladdin_shopcar.service.IShopCarService;
 import com.maiquan.aladdin_shopcar.util.LogUtil;
+import com.maiquan.aladdin_supplier.domain.Supplier;
+import com.maiquan.aladdin_supplier.service.ISupplierService;
 
 @Service
 public class ShopCarServiceImpl implements IShopCarService{
@@ -37,6 +36,9 @@ public class ShopCarServiceImpl implements IShopCarService{
 	
 	@Autowired
 	private IProductSkuService productSkuService;
+	
+	@Autowired
+	private ISupplierService supplierService;
 	
 	@Override
 	public List<Map<String,Object>> viewShopCar(String userID, String requestID) {
@@ -66,23 +68,27 @@ public class ShopCarServiceImpl implements IShopCarService{
 			ProductSku sku = productSkuService.getSkuByID(skuID, UUID.randomUUID().toString());
 			System.out.println("sku-----"+sku);
 			Product product = productService.queryProduct(sku.getProductID(), UUID.randomUUID().toString());
+			Supplier supplier = supplierService.getSupplier(product.getSupplyID(), UUID.randomUUID().toString());
 			
 			List<String> skuStrs = productSkuService.getSkuStr(skuID, UUID.randomUUID().toString());
 			
 			Map<String,Object> map = new HashMap<String,Object>();
 			
-			//1 存储skuID
+			//1 存储供应商
+			map.put("supName", supplier.getName());
+			//2 存储skuID
 			map.put("skuID", sku.getID());
-			//2 存储sku对应的图片
+			//3 存储sku对应的图片
 			map.put("imgPath",sku.getSkuImg());
-			//3 存储sku对应的商品描述
+			//4 存储sku对应的商品描述
 			map.put("sellDesc", product.getSellDesc());
-			//4 存储sku对应的sku属性
+			//5 存储sku对应的sku属性
 			map.put("skuStrs",skuStrs);
-			//5 存储sku对应的价格
+			//6 存储sku对应的价格
 			map.put("skuPrice", sku.getSkuPrice());
-			//6 存储sku对应的购买数量
+			//7 存储sku对应的购买数量
 			map.put("skuQuality", shopCarProducts.get(i).getQuality());
+			
 			
 			shopCarProductsMap.add(map);
 			
@@ -139,7 +145,7 @@ public class ShopCarServiceImpl implements IShopCarService{
 	}
 
 	@Override
-	public int removeShopCarProduct(Integer userID, Integer skuID, String requestID) {
+	public int removeShopCarProduct(Integer userID, Integer[] skuIDs, String requestID) {
 	
 		LogUtil.logInput("购物车微服务", "removeShopCarProduct", requestID, userID);
 			
@@ -153,7 +159,7 @@ public class ShopCarServiceImpl implements IShopCarService{
 			shopCarMapper.insert(shopCar);
 		}
 		
-		shopCarProductMapper.deleteByShopCarIDAndSkuID(shopCar.getShopCarID(),skuID);
+		shopCarProductMapper.deleteByShopCarIDAndSkuID(shopCar.getShopCarID(),skuIDs);
 		
 		LogUtil.logOutput("购物车微服务", "removeShopCarProduct", requestID, "无");
 		

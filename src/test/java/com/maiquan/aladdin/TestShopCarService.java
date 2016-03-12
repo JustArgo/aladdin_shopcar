@@ -52,7 +52,7 @@ public class TestShopCarService{
 	@Test
 	public void testRemoveShopCarProduct(){
 		
-		shopCarService.removeShopCarProduct(1, 233, "");
+		shopCarService.removeShopCarProduct(1, new Integer[]{233}, "");
 		
 	}
 	

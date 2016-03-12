@@ -1,4 +1,9 @@
 target/
+root/
+.settings/
+LICENSE
+.classpath
+.project
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

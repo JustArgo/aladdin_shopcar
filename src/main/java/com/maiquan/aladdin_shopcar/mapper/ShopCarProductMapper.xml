@@ -23,7 +23,10 @@
   </delete>
   <delete id="deleteByShopCarIDAndSkuID">
   	delete from t_shopcarproduct
-  	where shopCarID=#{shopCarID,jdbcType=INTEGER} AND skuID=#{skuID,jdbcType=INTEGER}
+  	where shopCarID=#{shopCarID,jdbcType=INTEGER} AND skuID in
+  	<foreach collection="skuIDs" item="skuID" open="(" close=")" separator=",">
+  		#{skuID,jdbcType=INTEGER}
+  	</foreach>
   </delete>
   <insert id="insert" parameterType="com.maiquan.aladdin_shopcar.domain.ShopCarProduct">
     insert into t_shopcarproduct (ID, shopCarID, productID, skuID,

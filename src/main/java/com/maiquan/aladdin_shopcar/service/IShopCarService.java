@@ -27,11 +27,11 @@ public interface IShopCarService {
 	/**
 	 * 从购物车移除商品
 	 * @param userID
-	 * @param productID
+	 * @param skuID
 	 * @param requestID
 	 * @return
 	 */
-	int removeShopCarProduct(Integer userID, Integer productID, String requestID);
+	int removeShopCarProduct(Integer userID, Integer[] skuIDs, String requestID);
 	
 	/**
 	 * 清空购物车

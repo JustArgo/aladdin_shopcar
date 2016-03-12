@@ -18,4 +18,7 @@
 	<dubbo:reference id="productService" interface="com.maiquan.aladdin_product.service.IProductService" protocol="dubbo"/>
 	<dubbo:reference id="productSkuServie" interface="com.maiquan.aladdin_product.service.IProductSkuService" protocol="dubbo"/>
 	
+	<!-- 引用供应商微服务 -->
+	<dubbo:reference id="supplierService" interface="com.maiquan.aladdin_supplier.service.ISupplierService" check="false"/>
+	
 </beans>

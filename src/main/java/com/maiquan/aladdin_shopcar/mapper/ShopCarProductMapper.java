@@ -9,7 +9,7 @@ import com.maiquan.aladdin_shopcar.domain.ShopCarProduct;
 public interface ShopCarProductMapper {
     int deleteByPrimaryKey(String ID);
 
-    int deleteByShopCarIDAndSkuID(@Param("shopCarID")String shopCarID, @Param("skuID")Integer skuID);
+    int deleteByShopCarIDAndSkuID(@Param("shopCarID")String shopCarID, @Param("skuIDs")Integer[] skuID);
     
     int insert(ShopCarProduct record);
 
